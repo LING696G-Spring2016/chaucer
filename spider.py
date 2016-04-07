@@ -55,7 +55,6 @@ def chaucer_spider(outdir="/data/html/"):
     # Now, at last, parse the TOC for each section and grab all of the
     # HTML files containing the parallel text for that section, and save
     # them to disk.
-    section_list = []
     re_linenum = re.compile('\d+-\d+')
     re_trim = re.compile('(.*/)')
 
