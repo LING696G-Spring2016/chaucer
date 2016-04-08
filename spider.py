@@ -78,12 +78,22 @@ def chaucer_spider(outdir="/data/html/"):
                 page_req = requests.get(link)
                 pref_mo = re_prefix.search(str(base))
                 prefix = pref_mo.group(1)
-
+                
+                engs = [[],[],[]]
+                which = 2
+                soup = BeautifulSoup(page_req.text)
+                for line in soup.select('tr td tr td + td'):
+                    if re.search('width="85%"',str(line)):
+                        which = (which + 1) % 2
+                    l_text = line.get_text().strip()
+                    if l_text and not re.search('^\d+$',l_text):
+                        engs[which].append(l_text)
                 # Save file to disk
                 outfile = str(os.getcwd()) + str(outdir) + str(prefix) + "/" + str(base)
                 os.makedirs(os.path.dirname(outfile), exist_ok=True)
                 with open(outfile, 'w') as f:
-                    f.write(page_req.text)
+                    for l1, l2 in zip(engs[0],engs[1]):
+                        print(l1,l2,sep='\n',file=f)
 
     return
 
