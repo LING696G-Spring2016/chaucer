@@ -10,8 +10,8 @@ def chaucer_spider(outdir="/data/html/"):
 
     # URL for top-level table of contents
     toc_url = 'http://www.librarius.com/cantales/contensm.htm'
-    print("* Beginning crawl ....")
-    print("* Retrieving table of contents ...")
+    print("Beginning crawl...")
+    print("Retrieving table of contents...")
 
     # Grab TOC
     toc_req = requests.get(toc_url)
@@ -67,6 +67,7 @@ def chaucer_spider(outdir="/data/html/"):
         # file names we find to it.
         trim_mo = re_trim.search(stoc)
         base_url = trim_mo.group(1)
+        re_prefix = re.compile('(.*?)\d+')
 
         for url in stoc_soup.findAll('a'):
             base = url.get('href')
@@ -75,11 +76,13 @@ def chaucer_spider(outdir="/data/html/"):
                 link = str(base_url) + str(base)
                 print("Found page " + link)
                 page_req = requests.get(link)
+                pref_mo = re_prefix.search(str(base))
+                prefix = pref_mo.group(1)
 
                 # Save file to disk
-                outfile = str(os.getcwd()) + str(outdir) + str(base)
+                outfile = str(os.getcwd()) + str(outdir) + str(prefix) + "/" + str(base)
                 os.makedirs(os.path.dirname(outfile), exist_ok=True)
-                with open(outfile, 'w+') as f:
+                with open(outfile, 'w') as f:
                     f.write(page_req.text)
 
     return
