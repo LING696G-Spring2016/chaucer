@@ -4,7 +4,7 @@ import re
 import os
 
 
-def chaucer_spider(outdir="/data/html/"):
+def chaucer_spider(outdir="/data/"):
     # Crawls the www.librarius.com site and downloads the various HTML files
     # containing the parallel text for the Canterbury Tales.
 
@@ -79,21 +79,23 @@ def chaucer_spider(outdir="/data/html/"):
                 pref_mo = re_prefix.search(str(base))
                 prefix = pref_mo.group(1)
                 
-                engs = [[],[],[]]
+                engs = [[], [], []]
                 which = 2
-                soup = BeautifulSoup(page_req.text)
+                soup = BeautifulSoup(page_req.text, 'lxml')
                 for line in soup.select('tr td tr td + td'):
-                    if re.search('width="85%"',str(line)):
+                    if re.search('width="85%"', str(line)):
                         which = (which + 1) % 2
                     l_text = line.get_text().strip()
-                    if l_text and not re.search('^\d+$',l_text):
+                    if l_text and not re.search('^\d+$', l_text):
                         engs[which].append(l_text)
+
                 # Save file to disk
-                outfile = str(os.getcwd()) + str(outdir) + str(prefix) + "/" + str(base)
+                outfile = str(os.getcwd()) + str(outdir) + str(prefix) + "/" +\
+                          re.sub('htm', 'txt', str(base))
                 os.makedirs(os.path.dirname(outfile), exist_ok=True)
                 with open(outfile, 'w') as f:
-                    for l1, l2 in zip(engs[0],engs[1]):
-                        print(l1,l2,sep='\n',file=f)
+                    for l1, l2 in zip(engs[0], engs[1]):
+                        print(l1, l2, sep='\n', file=f)
 
     return
 
