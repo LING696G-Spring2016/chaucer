@@ -17,3 +17,13 @@ class TokenizeOnWhitespacePunctuation(object):
         self.bigrams = []
         self.bothUnigramsBigrams = []
 
+    def getUnigrams(self):
+        self.unigrams = []
+        unfileredUnigrams = re.findall(r"[\w']+", self.stringToTokenize)
+        for word in unfileredUnigrams:
+            if self.applyStopwords == True:
+                if word not in self.listOfStopwords:
+                    self.unigrams.append(word)
+            else:
+                self.unigrams.append(word)
+        return self.unigrams
