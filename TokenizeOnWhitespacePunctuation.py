@@ -11,8 +11,6 @@ class TokenizeOnWhitespacePunctuation(object):
             self.stringToTokenize = stringToTokenize.lower()
 
         self.unigrams = []
-        self.bigrams = []
-        self.bothUnigramsBigrams = []
 
     def getUnigrams(self):
         self.unigrams = []
