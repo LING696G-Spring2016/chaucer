@@ -1,7 +1,7 @@
 import nltk
 import re
 
-knight = '/Users/hclent/Desktop/knight0001-0034.txt' #put filepath here
+knight = 'knight0001-0034.txt' #put filepath here
 
 def clean(files):
 	text = open(files, 'r')
