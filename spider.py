@@ -4,7 +4,7 @@ import re
 import os
 
 
-def chaucer_spider(outdir="/data/"):
+def chaucer_spider(outdir="/data/raw/"):
     # Crawls the www.librarius.com site and downloads the various HTML files
     # containing the parallel text for the Canterbury Tales.
 
