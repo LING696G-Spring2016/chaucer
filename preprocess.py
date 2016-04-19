@@ -3,7 +3,7 @@ import re
 from TokenizeOnWhitespacePunctuation import TokenizeOnWhitespacePunctuation as tkn
 
 
-def preprocess(filename, outdir="/data/tokenized/"):
+def preprocess(filename):
     # Open input and output files, creating output file as necessary
     infile = open(filename, 'r')
     outfilename = str(os.getcwd()) + "/" + re.sub("raw", "tokenized", str(filename))
