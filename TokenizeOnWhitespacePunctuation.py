@@ -14,9 +14,9 @@ class TokenizeOnWhitespacePunctuation(object):
 
     def getUnigrams(self):
         self.unigrams = []
+        self.stringToTokenize = re.sub(r"\s'|'\s|'$", "", self.stringToTokenize)
         self.stringToTokenize = re.sub(r"(\w)('\w)", r"\1 \2", self.stringToTokenize)
-        unfileredUnigrams = re.findall(r"[\w']+", self.stringToTokenize)
-        for word in unfileredUnigrams:
-            self.unigrams.append(str(word))
+        unfilteredUnigrams = re.findall(r"[\w']+", self.stringToTokenize)
+        for word in unfilteredUnigrams:
+            self.unigrams.append(word)
         return self.unigrams
-
