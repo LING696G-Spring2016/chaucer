@@ -1,11 +1,13 @@
 import os
+import re
 from TokenizeOnWhitespacePunctuation import TokenizeOnWhitespacePunctuation as tkn
 
 
 def preprocess(filename, outdir="/data/tokenized/"):
     # Open input and output files, creating output file as necessary
     infile = open(filename, 'r')
-    outfilename = str(os.getcwd()) + str(outdir) + str(filename)
+    outfilename = str(os.getcwd()) + "/" + re.sub("raw", "tokenized", str(filename))
+    print("Writing", outfilename)
     os.makedirs(os.path.dirname(outfilename), exist_ok=True)
     outfile = open(outfilename, 'w')
 
