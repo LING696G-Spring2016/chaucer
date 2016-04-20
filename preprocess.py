@@ -1,9 +1,9 @@
 import os
 import re
-from TokenizeOnWhitespacePunctuation import TokenizeOnWhitespacePunctuation as tkn
+from TokenizeOnWhitespacePunctuation import TokenizeOnWhitespacePunctuation
 
 
-def preprocess(filename):
+def tokenize_raw(filename):
     # Open input and output files, creating output file as necessary
     infile = open(filename, 'r')
     outfilename = str(os.getcwd()) + "/" + re.sub("raw", "tokenized", str(filename))
@@ -12,7 +12,7 @@ def preprocess(filename):
     outfile = open(outfilename, 'w')
 
     for line in infile:
-        tokenizer = tkn(line)
+        tokenizer = TokenizeOnWhitespacePunctuation(line)
         tokenized = tokenizer.getUnigrams()
         print(' '.join(tokenized), file=outfile)
 
@@ -23,4 +23,4 @@ def preprocess(filename):
 
 for dirpath, dirnames, filenames in os.walk('data/raw'):
     for name in filenames:
-        preprocess(os.path.join(dirpath, name))
+        tokenize_raw(os.path.join(dirpath, name))
