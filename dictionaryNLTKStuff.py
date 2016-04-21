@@ -49,18 +49,14 @@ def formatDictionary(taggedLines, modTaggedLines):
 	for line in modTaggedLines:
 		dM[line[0]] = POSkey[line[1]]
 
-	f = open('DictMid.txt','a')
-	for key, value in d.items():
-		f.write(str(key) + '\t' + str(value) + '\n')
-
-	g = open('DictMod.txt','a')
-	for key, value in dM.items():
-		g.write(str(key) + '\t' + str(value) + '\n')
+	print(d)
+	print(dM)
+	return d, dM
 
 def makeDictionaryFromFile(fileName):
 	lines = readFile(fileName)
 	taggedLines, modTaggedLines = tagLines(lines)
-	dictionary = formatDictionary(taggedLines, modTaggedLines)
+	midDict, modDict = formatDictionary(taggedLines, modTaggedLines)
 
 ##################### End of File Part, Begin Harvard1 and2 #########
 
@@ -128,21 +124,15 @@ def FinalLookUp(data, dictionary):
 					else:
 						finalDictMid[word] = '0'
 		else:
-			for word in words:
-				if word not in finalDictMod.keys():
-					if word in dictionary:
-						finalDictMod[word] = dictionary[word]
-					else:
-						finalDictMod[word] = '0'
+			w = nltk.pos_tag(words)
+			for word in w:
+				if word[0] not in finalDictMod.keys():
+					finalDictMod[word[0]] = POSkey[word[1]]
 		count = count + 1
 
-	f = open('DictMid.txt','a')
-	for key, value in finalDictMid.items():
-		f.write(str(key) + '\t' + str(value) + '\n')
-
-	g = open('DictMod.txt','a')
-	for key, value in finalDictMod.items():
-		g.write(str(key) + '\t' + str(value) + '\n')
+	print(finalDictMid)
+	print(finalDictMod)
+	return finalDictMid, finalDictMod
 
 ################### See which version to do ###########################
 
@@ -150,19 +140,19 @@ def makeDictionaryFromOED(fileName):
 	lines = readOEDdict()
 	dictionary = makeDict(lines)
 	data = readFile(fileName)
-	taggedData = FinalLookUp(data, dictionary)
+	dictMid, dictMod = FinalLookUp(data, dictionary)
 
 def makeDictionaryFromHarvard(fileName):
 	lines = readHarvardDict()
 	dictionary = makeDict(lines)
 	data = readFile(fileName)
-	taggedData = FinalLookUp(data, dictionary)
+	dictMid, dictMod = FinalLookUp(data, dictionary)
 
 def makeDictionaryFromGlossary(fileName):
 	lines = readGlossary()
 	dictionary = makeGlossDict(lines)
 	data = readFile(fileName)
-	taggedData = FinalLookUp(data, dictionary)
+	dictMid, dictMod = FinalLookUp(data, dictionary)
 
 if mode == 3:
 	makeDictionaryFromOED(sys.argv[1])
