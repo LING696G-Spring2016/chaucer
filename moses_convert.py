@@ -50,4 +50,4 @@ for dirpath, dirnames, filenames in os.walk(directory):
         path = os.path.join(dirpath, name)
         print("Processing " + path)
         me, en = split(path)
-        merge_append("chaucher_merged", me, en)
+        merge_append("chaucer_merged", me, en)
