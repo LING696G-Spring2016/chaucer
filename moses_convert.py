@@ -25,6 +25,8 @@ def split(filename):
                 middle_sents.append(line)
             count += 1
 
+    middle_sents = list(sent for sent in middle_sents if sent)
+    modern_sents = list(sent for sent in modern_sents if sent)
     return middle_sents, modern_sents
 
 
